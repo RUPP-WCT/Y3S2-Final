@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('account_statues', function (Blueprint $table) {
+        Schema::create('account_statuses', function (Blueprint $table) {
             $table->tinyIncrements('account_status_id');
             $table->string('account_status', 100)->unique();
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('account_statues');
+        Schema::dropIfExists('account_statuses');
     }
 };

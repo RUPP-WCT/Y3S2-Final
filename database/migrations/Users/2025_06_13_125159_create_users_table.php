@@ -13,20 +13,21 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('user_id')->unique();
+            $table->string('username', 50)->unique();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->timestamp('dob');
+            $table->timestamp('dob')->nullable();
             $table->unsignedTinyInteger('gender_id');
-            $table->string('current_address');
-            $table->string('avatar');
+            $table->string('current_address')->nullable();
+            $table->string('avatar')->nullable();
             $table->unsignedTinyInteger('account_status_id');
             $table->unsignedTinyInteger('account_role_id');
             $table->rememberToken();
             $table->timestamps();
 
             $table->foreign('gender_id')->references('gender_id')->on('genders')->restrictOnDelete()->cascadeOnUpdate();
-            $table->foreign('account_status_id')->references('account_status_id')->on('account_statues')->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreign('account_status_id')->references('account_status_id')->on('account_statuses')->restrictOnDelete()->cascadeOnUpdate();
             $table->foreign('account_role_id')->references('account_role_id')->on('account_roles')->restrictOnDelete()->cascadeOnUpdate();
         });
 

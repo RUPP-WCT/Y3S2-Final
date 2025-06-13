@@ -3,6 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Users\AccountRoles;
+use App\Models\Users\AccountStatuses;
+use App\Models\Users\AccountStatusNotes;
+use App\Models\Users\Genders;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +22,10 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    protected $primaryKey = 'user_id';
     protected $fillable = [
+        'username',
         'name',
         'email',
         'password',
@@ -36,10 +43,14 @@ class User extends Authenticatable
     }
 
     public function accountStatus () {
-        return $this->belongsTo(AccountStatues::class, 'account_status_id', 'account_status_id');
+        return $this->belongsTo(AccountStatuses::class, 'account_status_id', 'account_status_id');
     }
     public function accountRole () {
         return $this->belongsTo(AccountRoles::class, 'account_role_id', 'account_role_id');
+    }
+
+    public function accountStatusNotes () {
+        return $this->hasOne(AccountStatusNotes::class, 'user_id', 'user_id');
     }
 
     /**

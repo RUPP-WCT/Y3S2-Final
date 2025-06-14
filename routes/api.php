@@ -18,6 +18,9 @@ Route::prefix('auth')->group(function () {
         });
         Route::post('register', [UsersController::class, 'create']);
     });
+    Route::middleware(['auth:sanctum', 'throttle:10,1'])->group(function () {
+        Route::post('logout', [AuthController::class, 'logout']);
+    });
 });
 
 Route::middleware(['throttle:120,1'])->group(function () {
@@ -27,10 +30,9 @@ Route::middleware(['throttle:120,1'])->group(function () {
 
 
 
-
 // PRIVATE ROUTES ========================================================================
 
-Route::middleware(['auth:sanctum', 'throttle:120,1'])->group(function () {
+Route::middleware(['auth:sanctum', 'throttle:120,1' , 'status:1'])->group(function () {
     Route::get('user', [UsersController::class, 'show']);
     Route::post('user', [UsersController::class, 'update']);
 });
